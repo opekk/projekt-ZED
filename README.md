@@ -14,7 +14,7 @@
 ### Methodology 
 
 - metodologia uzwględnia tylko pracę na niezbalansowanych zbiorach danych
-- metoda SHapley Additive exPlanations (SHAP) pozwala nam na zrozumienie pracy modelu, poprzez nadawanie wyniku (shap_value) każdemu z cech. Najważniejsze cechy dostają najwięcej punktów, przez co wiemy, jak dana cecha wpływa na wynik końcowy modelu uczącego. \
+- metoda SHapley Additive exPlanations (SHAP) pozwala nam na zrozumienie pracy modelu, poprzez nadawanie wyniku (shap_value) każdemu z cech. Najważniejsze cechy dostają najwięcej punktów, przez co wiemy, jak dana cecha wpływa na wynik końcowy modelu uczącego. 
 
 --
 - najpierw wyuczono model korzystając z Isolation Forest, który bazował na wszystkich cechach zbioru. 
@@ -39,3 +39,12 @@
   Framework: Keras 2.8.0
 
 - Wynik: dataset z 29, 15 i 10 cechami, dla kazdego datasetu P = 500, 1000, 1500. Ogólnie 9 datasetów. 
+
+### Experiment
+
+- Kaggle dataset, 290k rekordów, anonimowe, podczas procesu nie bierzemy etykiet.
+- 30 cech: Amount, Time, V1-V28 - zanonimizowane
+- pod uwage bierzemy ceche Amonut i V1-V28
+- poprzez SHAP kategoryzujemy cechy V* od najwazniejszej do najmniej. 
+- TOP15: V13, V26,
+Amount, V22, V2, V24, V18, V19, V12, V3, V25, V27, V10, V16, and V4 
