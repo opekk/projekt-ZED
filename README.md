@@ -2,12 +2,13 @@
 
 ### Introduction
 
-- Mamy dataseta zwiazanego z oszustawami bankowymi.
-- Dane w tym datasecie najczęściej są niezbalansowane i nie są poetykietowane. (dataset jest etykietowany, autorzy nie korzystaja z etykiet).
+- Mamy dataseta zwiazanego z oszustawami kart kredytowych.
+- Dane w tym datasecie najczęściej są niezbalansowane i nie są poetykietowane. 
+(dataset jest etykietowany, autorzy nie korzystaja z etykiet).
 - Naszym celem jest polepszenie etykiet wygenerowanych przez model.
-- SHAP zamuje się wymienieniem dancyh najważniejszych dla model.
-- Dane w tym datasecie nie mają etykiet, wiec model uczy sie na calym datasecie, korzystając z IS, a potem uzywamy SHAP'a, aby wywnioskowac, które dane mają najważniejsze znaczenie.
-- Porównujemy potem wyniki SHAP'a z wynikami IS (Isolation Forest).
+- SHAP zajmuje się wymienieniem danych najważniejszych dla model.
+- Dane w tym datasecie nie mają etykiet, wiec model uczy sie na calym datasecie, korzystając z IF, a potem uzywamy SHAP'a, aby wywnioskowac, które dane mają najważniejsze znaczenie.
+- Porównujemy potem wyniki SHAP'a z wynikami IF (Isolation Forest).
 
 ---
 
@@ -21,8 +22,11 @@
 - Najpierw wyuczono model korzystając z Isolation Forest, który bazował na wszystkich cechach zbioru.
 - Potem skorzystano z metody SHAP, aby uwzględnić ważność danych cech i jak bardzo one wpływają na model.
 - Korzystamy z `abs(shap_value)`, aby potem uśrednić wynik, dzięki czemu dostajemy wartość ważności cechy.
-- Bierzemy grupy najważniejszych shap_values, i wyuczamy model IS na tych grupach. Grupy to: [3, 5, 7, 10, 15, 29] cech.
+
+- Dane dla poprzedniego badania:
+- Bierzemy grupy najważniejszych shap_values, i wyuczamy model IF na tych grupach. Grupy to: [3, 5, 7, 10, 15, 29] cech.
 - 50 replik nauki, 300 całościowych outputów.
+
 - Analiza wariantów poprzez HSD test.
 - Wyniki pokazały, że datasety z 15 i 29 cechami dały statystycznie podobną jakość etykiet. Dataset z 10 cechami wypadł nieco gorzej, ale nadal był użyteczny. Autorzy wybrali te 3 do dalszej analizy.
 
@@ -46,7 +50,7 @@
 
 ### Experiment
 
-- Kaggle dataset, 290k rekordów, anonimowe, podczas procesu nie bierzemy etykiet.
+- Kaggle dataset, około 290k rekordów, anonimowe, podczas procesu nie bierzemy etykiet.
 - 30 cech: Amount, Time, V1-V28 — zanonimizowane poprzez algorytm PCA.
 - Pod uwage bierzemy ceche Amount i V1-V28.
 - Poprzez SHAP kategoryzujemy cechy V* od najwazniejszej do najmniej.
@@ -65,7 +69,7 @@
 
 ### Performance Metrics
 
-- Korzystamy z AUPRC (Area Under the Precision-Recall Curve), który dzieli wartości na True Positive, False Positive, False Negative i True Negative jako macierz pomyłek.
+- Korzystamy z AUPRC (Area Under the Precision-Recall Curve), który jest obliczany na podstawie True Positive, False Positive, False Negative i True Negative z macierzy pomyłek.
 - AUPRC to metryka, która podsumowuje kompromis między precyzją (precision) a czułością (recall) modelu — im wyższa wartość AUPRC, tym lepiej model radzi sobie z wykrywaniem oszustw.
 
 ---
@@ -74,14 +78,14 @@
 
 - Korzystamy z 4 modeli: Decision Tree, Random Forest, Logistic Regression i Multi-Layer Perceptron, aby określić dokładność wygenerowanych etykiet.
 - Porównujemy wyniki z tymi modelami z Isolation Forest, które uczy się nienadzorowanie, tak aby zbadać samą dokładność wygenerowanych etykiet.
-- Nie korzystamy z hiperparametrów, chcemy sprawdzić ocene etykiet.
+- Nie korzystamy ze strojenia hiperparametrów, chcemy sprawdzić ocene etykiet.
 - 5-krotna walidacja krzyżowa powtórzona 10 razy w celu sprawdzenia czy wygenerowane etykiety są blisko prawdziwych etykiet.
 
 ---
 
 ### Experimental setup
 
-- Korzystamy z SHAPA, ktory wytworzyl 3 datasety: 29 etykiet, 15 etykiet i 10 etykiet.
+- Korzystamy z SHAPA, ktory wytworzyl 3 datasety: 29 cech, 15 cech i 10 cech.
 - Korzystamy z uczenia nienadzorowanego do kazdego z wytworzonych datasetów, przez co możemy zmierzyć selekcje wygenerowanych etykiet.
 - Następnie bierzemy liczbe transakcji oznaczonych jako Fraud (P) dla kazdego z datasetów. P = 500, 1000, 1500. Plateau przychodzi dla P = 1500.
 - Utworzono 9 datasetów, 5 modele uczące, 50 walidacji krzyżowych → 2250 outcomów.
