@@ -2,11 +2,11 @@
 
 ### Introduction
 
-- Mamy dataseta zwiazanego z oszustawami kart kredytowych.
+- Mamy dataseta zwiazanego z oszustwami kart kredytowych.
 - Dane w tym datasecie najczęściej są niezbalansowane i nie są poetykietowane. 
 (dataset jest etykietowany, autorzy nie korzystaja z etykiet).
 - Naszym celem jest polepszenie etykiet wygenerowanych przez model.
-- SHAP zajmuje się wymienieniem danych najważniejszych dla model.
+- SHAP zajmuje się wymienieniem danych najważniejszych dla modelu.
 - Dane w tym datasecie nie mają etykiet, wiec model uczy sie na calym datasecie, korzystając z IF, a potem uzywamy SHAP'a, aby wywnioskowac, które dane mają najważniejsze znaczenie.
 - Porównujemy potem wyniki SHAP'a z wynikami IF (Isolation Forest).
 
