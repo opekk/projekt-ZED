@@ -57,12 +57,16 @@ def main():
     # Przygotowanie katalogu na wyniki
     output_dir = 'artifacts/labeled_datasets'
     os.makedirs(output_dir, exist_ok=True)
-    print(f"Wyniki będą zapisywane w: {output_dir}")
+    print(f"Wyniki będą zapisywane w podkatalogach: {output_dir}/<feature_set>/")
 
     # 2. Pętla po zestawach cech
     for feature_set_name, features in feature_rankings.items():
         print(f"\n--- Przetwarzanie zestawu cech: {feature_set_name} ({len(features)} cech) ---")
-        
+
+        # Podkatalog dla bieżącego zestawu cech (np. top_29 -> top29)
+        feature_set_dir = os.path.join(output_dir, feature_set_name.replace('_', ''))
+        os.makedirs(feature_set_dir, exist_ok=True)
+
         # Przygotowanie danych dla bieżącego zestawu cech
         X = df[features]
         
@@ -131,8 +135,8 @@ def main():
             print(f"   Liczba wygenerowanych fraudów: {num_generated_frauds} (oczekiwano ok. {p})")
             
             # Zapis do pliku
-            output_filename = f"labeled_data_{feature_set_name}_p{p}.csv"
-            output_path = os.path.join(output_dir, output_filename)
+            output_filename = f"labeled_data_p{p}.csv"
+            output_path = os.path.join(feature_set_dir, output_filename)
             df_labeled.to_csv(output_path, index=False)
             print(f"   Zapisano do pliku: {output_path}")
 
